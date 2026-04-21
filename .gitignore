@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+node_modules/
+*.log
+
+# Source files not needed for the live site
+IMG_9073.JPG
+JaspherLising_Resume_2026.pdf
+.gstack/
