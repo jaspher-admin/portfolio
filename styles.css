@@ -396,6 +396,7 @@ section { padding: clamp(72px, 10vw, 140px) 0; }
 /* Timeline */
 .timeline {
   position: relative;
+  list-style: none;
   border-left: 1px solid var(--border);
   margin-left: 16px;
   padding-left: 40px;
