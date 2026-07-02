@@ -40,17 +40,22 @@ The `.nojekyll` file is already included so GitHub Pages serves the asset folder
 ## Structure
 
 ```
-index.html          # single-page site
-styles.css          # all styling
-script.js           # scroll effects + mobile nav
+index.html          # The Funnel — services, process, FAQ, lead form
+work.html           # The Proof — ARIA case study, outcomes, experience, skills
+styles.css          # shared foundation: tokens, nav, buttons, form, motion
+home.css            # index-only layout (hero diagram, services, process rail)
+work.css            # work-only layout (case study, timeline, skills)
+script.js           # nav, scroll-spy, reveals, count-ups, process rail, lead form
+apps-script.gs      # Google Apps Script backend for the lead form (see SETUP.md)
 assets/
-  profile.jpg       # portrait (auto-rotated from the source photo)
+  profile.jpg       # portrait (also the OG share image)
+  ARIA.png          # dashboard screenshot for the case study
   resume.pdf        # downloadable resume
 ```
 
 ## Editing
 
-- Update copy directly in `index.html`.
-- Swap the portrait by replacing `assets/profile.jpg`.
-- Swap the resume by replacing `assets/resume.pdf`.
+- Update copy directly in `index.html` / `work.html`.
+- Swap the portrait by replacing `assets/profile.jpg`, the resume via `assets/resume.pdf`.
 - Colors and typography live as CSS custom properties at the top of `styles.css` (`:root { ... }`).
+- **Connect the lead form** by following `SETUP.md`, then pasting the deployed Apps Script URL into `FORM_ENDPOINT` in `script.js` (inside `initForm`). Until then the form shows a friendly email fallback.

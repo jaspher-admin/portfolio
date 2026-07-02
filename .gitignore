@@ -9,3 +9,7 @@ node_modules/
 IMG_9073.JPG
 JaspherLising_Resume_2026.pdf
 .gstack/
+.claude/
+
+# Internal product artifact — real company data, never publish
+assets/exyt-dashboard.html

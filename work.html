@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ARIA case study & work — Jaspher Lising</title>
+  <meta name="description" content="ARIA: six platforms, one screen, 5–7 hours a day back. The architecture decisions behind the dashboard I built at EXYT, plus outcomes from THA, Appointmently, and Creative Pixel." />
+  <meta name="theme-color" content="#070809" />
+  <link rel="canonical" href="https://exyt-admin.github.io/portfolio/work.html" />
+  <meta property="og:title" content="ARIA case study & work — Jaspher Lising" />
+  <meta property="og:description" content="Six platforms, one screen, 5–7 hours a day back. The architecture decisions behind ARIA." />
+  <meta property="og:image" content="https://exyt-admin.github.io/portfolio/assets/ARIA.png" />
+  <meta property="og:url" content="https://exyt-admin.github.io/portfolio/work.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23101318'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='48' font-family='monospace' font-weight='600' fill='%237EB377'%3EJL%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="work.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="index.html" aria-label="Home">
+      <span class="brand-mark">JL</span>
+      <span class="brand-name">JL<span class="dim">/</span>SYSTEMS</span>
+    </a>
+    <span class="status-chip nav-status"><span class="status-dot" aria-hidden="true"></span>Online — Angeles City, PH</span>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#aria">ARIA</a></li>
+        <li><a href="#outcomes">Outcomes</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Stack</a></li>
+        <li><a href="#audit" class="nav-cta">Book a free audit</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main id="main">
+
+    <!-- Page header -->
+    <section class="page-head grid-bg" id="top">
+      <div class="container">
+        <p class="sys-eyebrow">CASE.01 <span class="dim">/</span> Featured work · 2025–present</p>
+        <h1 class="page-title">ARIA — six platforms, one screen, <em>5–7 hours a day back.</em></h1>
+        <p class="section-lede">The dashboard I built and run at EXYT. Six data agents pull from Meta, GHL, Monday, GA4, YouTube, and Wistia every day — into a single view that lets leadership spot underperforming ad sets in seconds and redirect spend before another day of budget burns.</p>
+      </div>
+    </section>
+
+    <!-- ARIA case study -->
+    <section class="sec case" id="aria">
+      <div class="container">
+
+        <blockquote class="pullquote reveal">
+          <p class="pullquote-text">5–7 hours of manual work, replaced by one screen. Underperforming campaigns spotted before lunch — <em>not at the end of the week.</em></p>
+          <p class="pullquote-attr mono">— ARIA in production at EXYT, daily</p>
+        </blockquote>
+
+        <div class="case-grid">
+          <div class="case-sticky">
+            <figure class="browser-frame ticks">
+              <div class="shot-chrome" aria-hidden="true">
+                <span class="shot-dot"></span><span class="shot-dot"></span><span class="shot-dot"></span>
+                <span class="shot-url">aria.exyt.internal</span>
+              </div>
+              <img src="assets/ARIA.png" alt="ARIA executive summary view — the live marketing dashboard built for EXYT" width="1915" height="981" />
+            </figure>
+            <p class="case-caption mono">Executive summary view · live at data.myexyt.com (private)</p>
+          </div>
+
+          <div class="case-decisions">
+            <p class="sys-eyebrow">Architecture <span class="dim">/</span> Four decisions that shaped it</p>
+            <ol class="decision-list">
+              <li class="reveal">
+                <p class="decision-id mono">DEC.01</p>
+                <p class="decision-q">Why Google Sheets as the warehouse?</p>
+                <p class="decision-a">Marketing leads needed to spot-check rows manually and slice ad-hoc pivots without learning SQL. <strong>Sheets won over Postgres on UX, not engineering elegance</strong> — and the dashboard hits a stale cache, not a live API, so query cost stays at zero.</p>
+              </li>
+              <li class="reveal">
+                <p class="decision-id mono">DEC.02</p>
+                <p class="decision-q">Why one HTML file, not a SPA framework?</p>
+                <p class="decision-a">A single dashboard, two views, a small audience. <strong>Inline CSS/JS served via FastAPI on a $12 VPS</strong> beats React + Vercel on cost, deploy time, and the number of moving parts that can break at 2am.</p>
+              </li>
+              <li class="reveal">
+                <p class="decision-id mono">DEC.03</p>
+                <p class="decision-q">Why six independent agents instead of one ETL?</p>
+                <p class="decision-a">Each platform's API breaks differently. <strong>Isolated agents fail isolated</strong> — Meta going down doesn't take GA4's pull with it, and rate-limit retries stay scoped to the source that triggered them.</p>
+              </li>
+              <li class="reveal">
+                <p class="decision-id mono">DEC.04</p>
+                <p class="decision-q">Why daily pulls and not real-time?</p>
+                <p class="decision-a">Marketing decisions don't need to be sub-second — they need to land <strong>before the next ad-spend cycle</strong>. Daily refreshes hit that bar at a fraction of the API cost and complexity. The team checks one screen each morning and acts before 10am.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <dl class="case-stats ticks reveal">
+          <div><dd class="mono">5–<span data-count="7">7</span></dd><dt class="mono">hours saved daily</dt></div>
+          <div><dd class="mono"><span data-count="100">100</span>+</dd><dt class="mono">rows ingested / day · 6 sources</dt></div>
+          <div><dd class="mono"><span data-count="7">7</span></dd><dt class="mono">daily agent runs</dt></div>
+          <div><dd class="mono live">● Live</dd><dt class="mono">in production</dt></div>
+        </dl>
+
+        <div class="case-flow">
+          <p class="sys-eyebrow">System <span class="dim">/</span> How the data flows</p>
+          <h2 class="section-title flow-title">From <em>six platforms</em> to one decision.</h2>
+          <svg class="flow-svg" viewBox="-40 0 760 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARIA architecture: sources flow into autonomous agents, into the Google Sheets warehouse, into the live dashboard, into decisions">
+            <defs>
+              <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#7eb377" />
+              </marker>
+            </defs>
+
+            <!-- Tier 1: Sources -->
+            <text x="95" y="80" fill="#7eb377" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="2">T1 — SOURCES</text>
+            <g>
+              <rect x="110" y="40" width="180" height="70" rx="6" fill="none" stroke="#313947" stroke-width="1" />
+              <text x="200" y="70" text-anchor="middle" fill="#f1f5f9" font-family="Inter, sans-serif" font-size="13" font-weight="500">Ad platforms</text>
+              <text x="200" y="90" text-anchor="middle" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">META · YOUTUBE</text>
+
+              <rect x="320" y="40" width="180" height="70" rx="6" fill="none" stroke="#313947" stroke-width="1" />
+              <text x="410" y="70" text-anchor="middle" fill="#f1f5f9" font-family="Inter, sans-serif" font-size="13" font-weight="500">CRM &amp; ops</text>
+              <text x="410" y="90" text-anchor="middle" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">GHL · MONDAY</text>
+
+              <rect x="530" y="40" width="180" height="70" rx="6" fill="none" stroke="#313947" stroke-width="1" />
+              <text x="620" y="70" text-anchor="middle" fill="#f1f5f9" font-family="Inter, sans-serif" font-size="13" font-weight="500">Analytics</text>
+              <text x="620" y="90" text-anchor="middle" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">GA4 · WISTIA</text>
+            </g>
+
+            <!-- Fan-in connectors -->
+            <g stroke="#4a6b45" stroke-width="1.2" fill="none">
+              <path class="flow-dash" d="M 200 110 Q 200 135 410 150" />
+              <path class="flow-dash" d="M 410 110 L 410 150" />
+              <path class="flow-dash" d="M 620 110 Q 620 135 410 150" />
+            </g>
+            <line x1="410" y1="150" x2="410" y2="178" stroke="#7eb377" stroke-width="1.5" marker-end="url(#arrow-green)" />
+
+            <!-- Tier 2: Agents -->
+            <text x="95" y="220" fill="#7eb377" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="2">T2 — AGENTS</text>
+            <rect x="110" y="180" width="600" height="70" rx="6" fill="rgba(126,179,119,0.1)" stroke="#7eb377" stroke-width="1.25" />
+            <text x="410" y="210" text-anchor="middle" fill="#f1f5f9" font-family="Inter, sans-serif" font-size="14" font-weight="600">Autonomous data agents</text>
+            <text x="410" y="232" text-anchor="middle" fill="#7eb377" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">PYTHON · DAILY PULLS · ISOLATED FAILURES</text>
+
+            <line x1="410" y1="250" x2="410" y2="288" stroke="#7eb377" stroke-width="1.5" marker-end="url(#arrow-green)" />
+
+            <!-- Tier 3: Warehouse -->
+            <text x="95" y="330" fill="#7eb377" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="2">T3 — WAREHOUSE</text>
+            <rect x="110" y="290" width="600" height="70" rx="6" fill="none" stroke="#313947" stroke-width="1" />
+            <text x="410" y="320" text-anchor="middle" fill="#f1f5f9" font-family="Inter, sans-serif" font-size="14" font-weight="500">Google Sheets warehouse</text>
+            <text x="410" y="342" text-anchor="middle" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">SINGLE SOURCE OF TRUTH · INSPECTABLE ROWS</text>
+
+            <line x1="410" y1="360" x2="410" y2="398" stroke="#7eb377" stroke-width="1.5" marker-end="url(#arrow-green)" />
+
+            <!-- Tier 4: Dashboard -->
+            <text x="95" y="440" fill="#7eb377" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="2">T4 — DASHBOARD</text>
+            <rect x="110" y="400" width="600" height="70" rx="6" fill="rgba(126,179,119,0.1)" stroke="#7eb377" stroke-width="1.25" />
+            <text x="410" y="430" text-anchor="middle" fill="#f1f5f9" font-family="Inter, sans-serif" font-size="14" font-weight="600">Live dashboard</text>
+            <text x="410" y="452" text-anchor="middle" fill="#7eb377" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">TWO VIEWS · ONE URL · PASSWORD-GATED</text>
+
+            <line x1="410" y1="470" x2="410" y2="508" stroke="#7eb377" stroke-width="1.5" marker-end="url(#arrow-green)" />
+
+            <!-- Tier 5: Outcome -->
+            <text x="95" y="555" fill="#7eb377" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="2">T5 — OUTCOME</text>
+            <rect x="110" y="510" width="600" height="80" rx="6" fill="#7eb377" />
+            <text x="410" y="558" text-anchor="middle" fill="#0a1a09" font-family="Inter, sans-serif" font-size="26" font-weight="800" letter-spacing="-1">Pause losing ads before lunch.</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- More outcomes -->
+    <section class="sec outcomes" id="outcomes">
+      <div class="container">
+        <div class="section-head">
+          <p class="sys-eyebrow">CASE.02–04 <span class="dim">/</span> More outcomes</p>
+          <h2 class="section-title">Same playbook, <em>different stacks.</em></h2>
+        </div>
+        <div class="oc-list">
+          <article class="oc-row reveal">
+            <p class="oc-client mono">Trauma Healing Accelerated</p>
+            <div class="oc-body">
+              <p class="oc-problem">CRM, email automation, and course platforms (Xperiencify, Kajabi, WordPress) running as disconnected islands.</p>
+              <p class="oc-build">Full technical integration across the stack plus SOPs aligned to the automations.</p>
+            </div>
+            <p class="oc-metric"><span class="mono">+40%</span> operational efficiency</p>
+          </article>
+          <article class="oc-row reveal">
+            <p class="oc-client mono">Appointmently</p>
+            <div class="oc-body">
+              <p class="oc-problem">Business-owner clients needed sites, funnels, and CRM tooling that actually converted.</p>
+              <p class="oc-build">GoHighLevel websites, automated lead-gen funnels, calendars-to-pipeline customer journeys.</p>
+            </div>
+            <p class="oc-metric"><span class="mono">40%</span> average sales boost</p>
+          </article>
+          <article class="oc-row reveal">
+            <p class="oc-client mono">Creative Pixel</p>
+            <div class="oc-body">
+              <p class="oc-problem">A production studio with no data behind its content decisions.</p>
+              <p class="oc-build">Analytics-driven content strategy plus streamlined studio operations.</p>
+            </div>
+            <p class="oc-metric"><span class="mono">+75%</span> organic reach</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="sec experience" id="experience">
+      <div class="container">
+        <div class="section-head">
+          <p class="sys-eyebrow">LOG <span class="dim">/</span> Experience</p>
+          <h2 class="section-title">Six years of shipping systems that <em>move the number.</em></h2>
+        </div>
+
+        <ol class="timeline">
+          <li class="tl-item reveal">
+            <div class="tl-meta">
+              <span class="tl-date mono">Nov 2025 — Present</span>
+              <span class="tl-loc mono">Remote</span>
+            </div>
+            <div class="tl-body">
+              <h3>Automations &amp; Systems Lead <span class="at">@ EXYT</span></h3>
+              <ul>
+                <li>Built and run ARIA — six autonomous data agents feeding one live leadership dashboard.</li>
+                <li>Architected multi-pipeline funnels in GoHighLevel with advanced tagging, attribution, and workflow segmentation.</li>
+                <li>Deployed Zapier automations connecting GHL, Monday.com, Stripe, and Google Suite — eliminating manual handoffs across departments.</li>
+                <li>Mapped the tech stack end to end for zero data duplication and scalable workflows across sales, finance, and coaching teams.</li>
+                <li>Led team enablement — SOPs, training guides, access hierarchies.</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="tl-item reveal">
+            <div class="tl-meta">
+              <span class="tl-date mono">May 2025 — Feb 2026</span>
+              <span class="tl-loc mono">Remote</span>
+            </div>
+            <div class="tl-body">
+              <h3>GoHighLevel Marketing Specialist <span class="at">@ Trauma Healing Accelerated</span></h3>
+              <ul>
+                <li>Orchestrated complete technical integration of CRM, email automation, and cross-platform tools (Xperiencify, Zapier, WordPress, Kajabi) — <strong>+40% operational efficiency</strong>.</li>
+                <li>Developed SOPs aligned with automation strategies — <strong>+30% team productivity</strong> and system consistency across platforms.</li>
+                <li>Streamlined workflows and built high-converting funnels with marketing and operations teams.</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="tl-item reveal">
+            <div class="tl-meta">
+              <span class="tl-date mono">May 2024 — May 2025</span>
+              <span class="tl-loc mono">Clark City, Pampanga</span>
+            </div>
+            <div class="tl-body">
+              <h3>Web Developer <span class="at">@ Appointmently</span></h3>
+              <ul>
+                <li>Built and deployed GoHighLevel websites for business owners — <strong>average 40% sales boost</strong>.</li>
+                <li>Engineered CRM tools that streamlined client operations and drove revenue growth.</li>
+                <li>Designed automated lead-gen funnels with optimized workflows, improving conversion and follow-up efficiency.</li>
+                <li>Integrated calendars, forms, and pipelines into a seamless customer journey.</li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="tl-item reveal">
+            <div class="tl-meta">
+              <span class="tl-date mono">Jan 2020 — Jan 2022</span>
+              <span class="tl-loc mono">Angeles City, Pampanga</span>
+            </div>
+            <div class="tl-body">
+              <h3>Production Manager <span class="at">@ Creative Pixel</span></h3>
+              <ul>
+                <li>Directed daily studio operations, coordinating photography and video shoots.</li>
+                <li>Managed client relationships and studio admin — budgeting, invoicing, scheduling.</li>
+                <li>Developed analytics-driven content strategies — <strong>+75% organic reach</strong> and a notable CTR rise.</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="sec skills" id="skills">
+      <div class="container">
+        <div class="section-head">
+          <p class="sys-eyebrow">STACK <span class="dim">/</span> Tools wired daily</p>
+          <h2 class="section-title">The tools I wire together, <em>day in, day out.</em></h2>
+        </div>
+
+        <div class="skill-grid">
+          <article class="skill-card ticks">
+            <h3 class="skill-name mono">CRM</h3>
+            <div class="chip-row">
+              <span class="chip">GoHighLevel</span><span class="chip">HubSpot</span><span class="chip">Brevo</span><span class="chip">Kajabi</span><span class="chip">ClickUp</span>
+            </div>
+          </article>
+          <article class="skill-card ticks">
+            <h3 class="skill-name mono">Integration</h3>
+            <div class="chip-row">
+              <span class="chip">Zapier</span><span class="chip">Make</span><span class="chip">n8n</span><span class="chip">Apps Script</span><span class="chip">REST APIs</span><span class="chip">GitHub</span><span class="chip">Firebase</span>
+            </div>
+          </article>
+          <article class="skill-card ticks">
+            <h3 class="skill-name mono">Web</h3>
+            <div class="chip-row">
+              <span class="chip">WordPress</span><span class="chip">Elementor Pro</span><span class="chip">Wix Studio</span><span class="chip">HTML / CSS / JS</span><span class="chip">Python</span>
+            </div>
+          </article>
+          <article class="skill-card ticks">
+            <h3 class="skill-name mono">AI</h3>
+            <div class="chip-row">
+              <span class="chip">Claude</span><span class="chip">ChatGPT</span><span class="chip">Gemini</span><span class="chip">Perplexity</span><span class="chip">Copilot</span>
+            </div>
+          </article>
+          <article class="skill-card ticks">
+            <h3 class="skill-name mono">Design</h3>
+            <div class="chip-row">
+              <span class="chip">Figma</span><span class="chip">Photoshop</span><span class="chip">Canva</span><span class="chip">Gamma AI</span><span class="chip">Miro</span>
+            </div>
+          </article>
+          <article class="skill-card ticks">
+            <h3 class="skill-name mono">Admin</h3>
+            <div class="chip-row">
+              <span class="chip">Google Suite</span><span class="chip">Monday.com</span><span class="chip">Asana</span><span class="chip">Notion</span><span class="chip">Airtable</span><span class="chip">Meta Business</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="certs">
+          <p class="sys-eyebrow">CERTS <span class="dim">/</span> Verified</p>
+          <ul class="cert-list">
+            <li>GoHighLevel Certificate</li>
+            <li>A.I. Automation on Business</li>
+            <li>Cybersecurity in the Age of A.I.</li>
+          </ul>
+          <p class="resume-line">Want the paper version? <a class="arrow-link" href="assets/resume.pdf" download>Download the resume (PDF) ↓</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Audit / lead form -->
+    <section class="sec audit grid-bg" id="audit">
+      <div class="container">
+        <div class="audit-head">
+          <p class="sys-eyebrow">SYS.05 <span class="dim">/</span> Book the audit</p>
+          <h2 class="section-title">Want this level of thinking on <em>your stack?</em></h2>
+          <p class="section-lede">Free 30-minute audit call. We walk through your systems live, and you leave with three prioritized fixes — whether we work together or not.</p>
+        </div>
+
+        <div class="form-wrap">
+          <form class="lead-form ticks" id="leadForm" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="lf-name">Name</label>
+                <input id="lf-name" name="name" type="text" autocomplete="name" required placeholder="Your name" />
+              </div>
+              <div class="form-field">
+                <label for="lf-email">Email</label>
+                <input id="lf-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com" />
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="lf-phone">Phone / WhatsApp <span class="opt">(optional)</span></label>
+              <input id="lf-phone" name="phone" type="tel" autocomplete="tel" placeholder="+1 ..." />
+            </div>
+            <div class="form-field">
+              <label for="lf-message">What's the biggest bottleneck in your stack right now?</label>
+              <textarea id="lf-message" name="message" rows="4" required placeholder="A few sentences is plenty."></textarea>
+            </div>
+
+            <!-- Honeypot: hidden from humans, catches bots -->
+            <div class="lf-hp" aria-hidden="true">
+              <label>Leave this empty <input type="text" name="company_website" tabindex="-1" autocomplete="off" /></label>
+            </div>
+
+            <button class="btn btn-primary btn-large" type="submit" id="lf-submit">Send it over <span class="arr" aria-hidden="true">→</span></button>
+            <p class="lf-status" id="lf-status" role="status" aria-live="polite"></p>
+          </form>
+          <p class="form-fallback">Prefer email? <a href="mailto:jaspher.lising01@gmail.com">jaspher.lising01@gmail.com</a> · <a href="https://www.linkedin.com/in/jaspherlising" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <p class="mono">JL/SYSTEMS — built from scratch, no templates</p>
+      <p>© <span id="year"></span> Jaspher Lising · Angeles City, Pampanga · PH</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
