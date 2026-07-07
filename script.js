@@ -6,7 +6,6 @@
   initSpy();
   initReveal();
   initCountUp();
-  initProcessRail();
   initYear();
   initForm();
 
@@ -110,27 +109,6 @@
       });
     }, { threshold: 0.5 });
     els.forEach(el => io.observe(el));
-  }
-
-  /* ---------- Process rail: light up the active step ---------- */
-  function initProcessRail() {
-    const rail = document.querySelector('[data-rail]');
-    if (!rail) return;
-    const items = rail.querySelectorAll('[data-rail-item]');
-    const steps = document.querySelectorAll('[data-rail-step]');
-    if (!items.length || !steps.length) return;
-    const byStep = new Map(Array.from(items).map(it => [it.getAttribute('data-rail-item'), it]));
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        const item = byStep.get(e.target.getAttribute('data-rail-step'));
-        if (!item) return;
-        if (e.isIntersecting) {
-          items.forEach(i => i.classList.remove('is-active'));
-          item.classList.add('is-active');
-        }
-      });
-    }, { rootMargin: '-35% 0px -50% 0px', threshold: 0 });
-    steps.forEach(s => io.observe(s));
   }
 
   /* ---------- Footer year ---------- */

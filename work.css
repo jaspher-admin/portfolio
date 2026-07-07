@@ -152,169 +152,35 @@
   height: auto;
 }
 
-/* ---------- Outcomes (mini-cases) ---------- */
-.oc-list { display: flex; flex-direction: column; }
-.oc-row {
+/* ---------- Reconciliation case study ---------- */
+.case-recon .section-head { margin-bottom: clamp(40px, 5vw, 64px); }
+.recon-grid {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr);
-  gap: clamp(20px, 3vw, 48px);
-  padding: clamp(32px, 4vw, 48px) 0;
-  border-top: 1px solid var(--border);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: clamp(32px, 5vw, 72px);
   align-items: start;
 }
-.oc-row:last-child { border-bottom: 1px solid var(--border); }
-.oc-client {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink);
-  margin: 0;
+.recon-story { display: flex; flex-direction: column; }
+.story-step {
+  padding: 26px 0;
+  border-top: 1px solid var(--border);
 }
-.oc-body p { margin: 0 0 10px; font-size: 15px; line-height: 1.6; }
-.oc-body p:last-child { margin-bottom: 0; }
-.oc-problem { color: var(--ink-muted); }
-.oc-build { color: var(--ink-dim); }
-.oc-metric {
-  margin: 0;
-  font-size: 14px;
-  color: var(--ink-dim);
-  text-align: right;
-}
-.oc-metric .mono {
-  display: block;
-  font-size: clamp(28px, 3vw, 40px);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  color: var(--accent);
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums;
-}
-@media (max-width: 820px) {
-  .oc-row { grid-template-columns: 1fr; gap: 14px; }
-  .oc-metric { text-align: left; }
-}
-
-/* ---------- Timeline ---------- */
-.timeline {
-  position: relative;
-  border-left: 1px solid var(--border);
-  margin-left: 8px;
-  padding-left: 40px;
-}
-.tl-item { position: relative; padding: 0 0 clamp(48px, 6vw, 64px); }
-.tl-item:last-child { padding-bottom: 0; }
-.tl-item::before {
-  content: "";
-  position: absolute;
-  left: -46px; top: 7px;
-  width: 11px; height: 11px;
-  border-radius: 50%;
-  background: var(--bg);
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-ghost);
-}
-.tl-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  margin-bottom: 10px;
-}
-.tl-date {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
-}
-.tl-loc {
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  color: var(--ink-muted);
-}
-.tl-body h3 {
-  font-family: var(--f-display);
-  font-weight: 700;
-  font-size: clamp(21px, 2.2vw, 28px);
-  margin: 0 0 14px;
-  letter-spacing: -0.02em;
-}
-.tl-body h3 .at { color: var(--ink-muted); font-weight: 500; }
-.tl-body ul {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 68ch;
-}
-.tl-body li {
-  position: relative;
-  padding-left: 22px;
-  font-size: 15px;
-  color: var(--ink-dim);
-  line-height: 1.6;
-}
-.tl-body li::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 0.7em;
-  width: 10px; height: 1px;
-  background: var(--border-strong);
-}
-.tl-body strong { color: var(--ink); font-weight: 600; }
-
-@media (max-width: 560px) {
-  .timeline { margin-left: 2px; padding-left: 28px; }
-  .tl-item::before { left: -34px; }
-}
-
-/* ---------- Skills ---------- */
-.skill-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-.skill-card {
-  padding: 28px 28px 30px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), background 0.3s var(--ease);
-}
-.skill-card:hover {
-  border-color: var(--border-strong);
-  transform: translateY(-4px);
-  background: var(--surface-2);
-}
-.skill-name {
-  font-size: 13px;
-  font-weight: 500;
+.story-step:last-child { padding-bottom: 0; }
+.story-id {
+  font-size: 11px;
   letter-spacing: 0.14em;
-  text-transform: uppercase;
   color: var(--accent);
-  margin: 0 0 18px;
+  margin: 0 0 10px;
 }
-.skill-card:hover .chip { color: var(--ink); border-color: var(--border-strong); }
-
-.certs { margin-top: clamp(48px, 6vw, 72px); }
-.cert-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.cert-list li {
-  padding: 12px 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  font-family: var(--f-mono);
-  font-size: 12.5px;
-  letter-spacing: 0.03em;
+.story-step p:not(.story-id) {
+  font-size: 15.5px;
   color: var(--ink-dim);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 58ch;
 }
-.resume-line {
-  margin: 28px 0 0;
-  font-size: 14.5px;
-  color: var(--ink-dim);
+@media (max-width: 940px) {
+  .recon-grid { grid-template-columns: 1fr; }
 }
 
 /* ---------- Audit ---------- */
