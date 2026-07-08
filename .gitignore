@@ -14,3 +14,10 @@ JaspherLising_Resume_2026.pdf
 
 # Internal product artifact — real company data, never publish
 assets/exyt-dashboard.html
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
